@@ -162,6 +162,7 @@ footer span:last-child {
 #loading {
     position: absolute;
     top: 2em;
+    left: 0;
     background: url('../img/ajax-circle.gif') no-repeat center 30%;
     background-color: white;
     bottom: 0;
