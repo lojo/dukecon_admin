@@ -2,7 +2,8 @@ require.config({
     baseUrl: "js",
 
     paths: {
-        vue : 'vue'
+        vue : 'vue.min',
+        moment: 'moment-with-locales-2.11.2'
     }
 });
 

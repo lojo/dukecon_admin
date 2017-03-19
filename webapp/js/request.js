@@ -5,10 +5,15 @@ define(['dummy'], function(dummy) {
                 if (onSuccess) {
                     onSuccess(dummy);
                 }
-            }, 2000);
+            }, 1000);
         },
-        update: function(onSuccess, onError) {
-            console.log("Dummy update done.");
+        update: function(data, onSuccess, onError) {
+            setTimeout(function() {
+                if (onSuccess) {
+                    console.log("Dummy update done.");
+                    onSuccess();
+                }
+            }, 1000);
         }
     }
 });

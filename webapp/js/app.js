@@ -1,4 +1,4 @@
-define(['vue'], function(Vue) {
+define(['vue', 'moment', 'popups'], function(Vue, moment, popups) {
 
     var request = null, app = null, initialized = false;
 
@@ -17,6 +17,7 @@ define(['vue'], function(Vue) {
 
         entries.forEach(function(entry) {
             entry.roomName = getRoomName(entry.locationId, result.metaData.locations);
+            entry.formattedStart = moment(entry.start).format('lll');
         });
 
         app.talks = entries;
@@ -30,12 +31,37 @@ define(['vue'], function(Vue) {
         app.error = true;
     }
 
+    function confirmAndUpdate(event) {
+        var id = event.currentTarget.id;
+
+        var message = "Room: "
+            + app.talks[id].roomName
+            + "\nTime: " + app.talks[id].formattedStart
+            + "\n\nNew Status: "
+            + (app.talks[id].fullyBooked ? "Fully booked" : "Free")
+            + "\n\nContinue?"
+
+        popups.confirm(
+            "Confirm Status Change",
+            message,
+            function() {
+                app.loading = true;
+                request.update(app.talks, function() { app.loading = false }, onError);
+            },
+            function() {
+                app.talks[id].fullyBooked = !app.talks[id].fullyBooked;
+                console.log("aborted");
+            }
+        );
+    }
+
     function initialize(req) {
         request = req;
         app = new Vue({
             el: "main",
             data: {
                 talks: {},
+                doUpdate: confirmAndUpdate,
                 loading: true,
                 error: false
             }
@@ -46,7 +72,6 @@ define(['vue'], function(Vue) {
     }
 
     return {
-        app: app,
         initialize: initialize
     };
 });

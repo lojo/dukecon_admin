@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head lang="en">
     <meta charset="UTF-8">
     <META name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0">
@@ -7,6 +7,7 @@
     <meta name="msapplication-tap-highlight" content="no">
     <script src="js/require.js" data-main="app-admin"></script>
     <link rel="stylesheet" type="text/css" href="css/dukecon.css"/>
+    <link rel="stylesheet" type="text/css" href="css/popups.css"/>
     <link rel="stylesheet" type="text/css" href="css/styles.css"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon" />
     <title>DukeCon Admin - Room Control</title>
@@ -30,7 +31,7 @@
                     Full?
                 </th>
             </tr>
-            <tr v-for="talk in talks">
+            <tr v-for="(talk, index) in talks">
                 <td>
                     <div class="room dark">
                         <div class="label">Room:</div>
@@ -38,7 +39,7 @@
                     </div>
                     <div class="time">
                         <div class="label">Time:</div>
-                        <div>{{ talk.start }}</div>
+                        <div>{{ talk.formattedStart }}</div>
                     </div>
                     <div class="talk">
                         <div class="label">Talk:</div>
@@ -46,12 +47,13 @@
                     </div>
                 </td>
                 <td>
-                    <input v-bind:id="talk.id" type="checkbox"><label v-bind:for="talk.id">&nbsp;</label>
+                    <input type="checkbox" v-bind:id="index" v-model="talk.fullyBooked" v-on:change="doUpdate"><label v-bind:for="index"></label>
                 </td>
             </tr>
         </table>
     </div>
 </main>
+
 <footer>
     <a target="new" rel="noopener noreferrer" href="https://programm.javaland.eu">Return to Javaland 2017 Program</a>
     <span>powered by<a href="http://www.dukecon.org" target="_blank" rel="noopener noreferrer">DukeCon</a></span>
