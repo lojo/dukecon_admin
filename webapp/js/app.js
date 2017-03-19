@@ -17,7 +17,7 @@ define(['vue', 'moment', 'popups'], function(Vue, moment, popups) {
 
         entries.forEach(function(entry) {
             entry.roomName = getRoomName(entry.locationId, result.metaData.locations);
-            entry.formattedStart = moment(entry.start).format('lll');
+            entry.formattedStart = moment(entry.start).format('MMM DD, HH:mm');
         });
 
         app.talks = entries;
@@ -39,7 +39,7 @@ define(['vue', 'moment', 'popups'], function(Vue, moment, popups) {
             + "\nTime: " + app.talks[id].formattedStart
             + "\n\nNew Status: "
             + (app.talks[id].fullyBooked ? "Fully booked" : "Free")
-            + "\n\nContinue?"
+            + "\n\nContinue?";
 
         popups.confirm(
             "Confirm Status Change",

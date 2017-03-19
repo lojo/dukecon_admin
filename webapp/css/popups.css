@@ -47,14 +47,26 @@
     flex-grow:0;
     flex-shrink: 0;
     margin: 5px;
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+}
+.popup-buttons button:active {
+    box-shadow: none;
 }
 #popup-yes {
+    background: darkgreen;
+    border-color: darkgreen;
+}
+#popup-yes:hover {
     background: green;
     border-color: green;
 }
 #popup-no {
-    background: red;
-    border-color: red;
+    background: darkred;
+    border-color: darkred;
+}
+#popup-no:hover {
+    background: #cc0000;
+    border-color: #cc0000;
 }
 @media (max-width: 480px) {
     .popup {
