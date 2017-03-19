@@ -2,10 +2,10 @@ require.config({
     baseUrl: "js",
 
     paths: {
+        vue : 'vue'
     }
 });
 
-require(['domReady!'], function() {
-    console.log("dom ready!");
-
+require(['app', 'request', 'domReady!'], function(app, request) {
+    app.initialize(request);
 });

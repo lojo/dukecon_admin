@@ -17,10 +17,44 @@
     <h1>Javaland Room Control</h1>
 </header>
 <noscript><br><br><br><br>Please enable Javascript to use this site.</noscript>
-<div id="loading"></div>
 <main>
-Nothing happening yet, just a loading spinner...
+    <div id="loading" v-if="loading"></div>
+    <div v-if="!loading">
+        <h2>Current talks</h2>
+        <table>
+            <tr>
+                <th>
+                    Talk/Room
+                </th>
+                <th>
+                    Full?
+                </th>
+            </tr>
+            <tr v-for="talk in talks">
+                <td>
+                    <div class="room dark">
+                        <div class="label">Room:</div>
+                        <div>{{ talk.roomName }}</div>
+                    </div>
+                    <div class="time">
+                        <div class="label">Time:</div>
+                        <div>{{ talk.start }}</div>
+                    </div>
+                    <div class="talk">
+                        <div class="label">Talk:</div>
+                        <div>{{ talk.title }}</div>
+                    </div>
+                </td>
+                <td>
+                    <input v-bind:id="talk.id" type="checkbox"><label v-bind:for="talk.id">&nbsp;</label>
+                </td>
+            </tr>
+        </table>
+    </div>
 </main>
-<footer><a target="new" rel="noopener noreferrer" href="https://programm.javaland.eu">Return to Javaland 2017 Program</a></footer>
+<footer>
+    <a target="new" rel="noopener noreferrer" href="https://programm.javaland.eu">Return to Javaland 2017 Program</a>
+    <span>powered by<a href="http://www.dukecon.org" target="_blank" rel="noopener noreferrer">DukeCon</a></span>
+</footer>
 </body>
 </html>
