@@ -1,5 +1,5 @@
 {
-  "conferences": "https://latest.dukecon.org/rest/conference/jl2017",
-  "events": "https://latest.dukecon.org/rest/events/jl2017",
-  "admin": "https://latest.dukecon.org/rest/admin/jl2017"
+  "conferences": "https://latest.dukecon.org/javaland/2017/rest/conferences/jl2017",
+  "events": "https://latest.dukecon.org/javaland/2017/rest/events/jl2017",
+  "admin": "https://latest.dukecon.org/javaland/2017/rest/admin/jl2017"
 }
