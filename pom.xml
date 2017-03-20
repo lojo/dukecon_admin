@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.dukecon</groupId>
+    <artifactId>dukecon-admin-client</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>DukeCon Admin Client</name>
+
+    <scm>
+        <url>https://github.com/dukecon/dukecon_admin.git</url>
+        <connection>scm:git:git@github.com:dukecon/dukecon_admin.git</connection>
+      <tag>HEAD</tag>
+    </scm>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Set this to localhost if you would like to test upload server -->
+        <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
+        <nexus.repository.port />
+        <nexus.repository.base>/nexus</nexus.repository.base>
+
+        <dukecon.default.conferenceid>jl2017</dukecon.default.conferenceid>
+        <dukecon.server.urls.base>https://localhost:8080/develop</dukecon.server.urls.base>
+        <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
+        <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/events/${dukecon.default.conferenceid}</dukecon.server.urls.events>
+        <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>latest</id>
+            <properties>
+                <dukecon.server.urls.base>https://latest.dukecon.org/javaland/2017</dukecon.server.urls.base>
+                <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
+                <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/events/${dukecon.default.conferenceid}</dukecon.server.urls.events>
+                <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
+            </properties>
+        </profile>
+    </profiles>
+    
+    <repositories>
+        <repository>
+            <id>dukecon</id>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+    
+    <pluginRepositories>
+        <pluginRepository>
+            <id>dukecon</id>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>dukecon-snapshots</id>
+            <name>DukeCon Snapshots</name>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>dukecon-releases</id>
+            <name>DukeCon Snapshots</name>
+            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/releases</url>
+        </repository>
+    </distributionManagement>
+    
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/webapp</directory>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.0.2</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>resources</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

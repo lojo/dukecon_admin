@@ -1,0 +1,5 @@
+{
+  "conferences": "${dukecon.server.urls.conferences}",
+  "events": "${dukecon.server.urls.events}",
+  "admin": "${dukecon.server.urls.admin}"
+}
