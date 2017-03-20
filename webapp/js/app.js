@@ -34,12 +34,13 @@ define(['vue', 'moment', 'popups'], function(Vue, moment, popups) {
     function confirmAndUpdate(event) {
         var id = event.currentTarget.id;
 
-        var message = "Room: "
+        var status = app.talks[id].fullyBooked ? "Fully booked" : "Free";
+        var message = "<span>Room: </span><em class=\"dark\">"
             + app.talks[id].roomName
-            + "\nTime: " + app.talks[id].formattedStart
-            + "\n\nNew Status: "
-            + (app.talks[id].fullyBooked ? "Fully booked" : "Free")
-            + "\n\nContinue?";
+            + "</em>\n<span>Time: </span><em class=\"dark\">" + app.talks[id].formattedStart
+            + "</em>\n\n<span>New Status: </span><em class=\"" + status.replace(" ", "") + "\">"
+            + status
+            + "</em>\n\nContinue?";
 
         popups.confirm(
             "Confirm Status Change",

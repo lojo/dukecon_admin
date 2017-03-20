@@ -179,6 +179,16 @@ footer span:last-child {
     width: 50px;
     flex-shrink: 0;
 }
+.popup-content em {
+    font-style: normal;
+    font-weight: bold;
+}
+.popup-content em.Fullybooked {
+    color: darkred;
+}
+.popup-content em.Free {
+    color: darkgreen;
+}
 
 @media (max-width: 480px) {
     main {

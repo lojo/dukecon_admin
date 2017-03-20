@@ -1,5 +1,5 @@
 define(function() {
-    var template =
+    var confirmTemplate =
         '<div class="popup">' +
         '  <div>' +
         '     <div class="popup-title">{title}</div>' +
@@ -8,10 +8,27 @@ define(function() {
         '  </div>' +
         '</div>';
 
-    function createHtml(title, message) {
-        var msg = message.replace("<", "&lt;").replace(/\n/g, "<br>");
-        var ttl = title.replace("<", "&lt;").replace(/\n/g, "<br>");
-        console.log(message);
+    var alertTemplate =
+        '<div class="popup">' +
+        '  <div>' +
+        '     <div class="popup-title">{title}</div>' +
+        '     <div class="popup-content">{message}</div>' +
+        '     <div class="popup-buttons"><button id="popup-yes">OK</button></div>' +
+        '  </div>' +
+        '</div>';
+
+    function stripEvilTags(html) {
+        var evilTags = ["script", "embed", "object", "iframe", "frame", "img", "image", "canvas", "picture", "video", "audio"];
+        var i, strippedHtml = html;
+        for (i = 0; i < evilTags.length; i += 1) {
+            strippedHtml = strippedHtml.replace("<" + evilTags[i], "&lt;" + evilTags[i]);
+        }
+        return strippedHtml.replace(/\n/g, "<br>");
+    }
+    
+    function createHtml(template, title, message) {
+        var msg = stripEvilTags(message);
+        var ttl = stripEvilTags(title);
         var innerHTML = template.replace("{title}", ttl);
         innerHTML = innerHTML.replace("{message}", msg);
         return innerHTML;
@@ -19,29 +36,40 @@ define(function() {
 
     function removePopup() {
         var removeMe = document.getElementById("popup-veil");
-        document.querySelector("main").removeChild(removeMe);
+        document.querySelector("body").removeChild(removeMe);
     }
 
+    function addPopup(template, title, message) {
+		var main = document.querySelector("body");
+		var node = document.createElement("div");
+		node.id = "popup-veil";
+		node.innerHTML = createHtml(template, title, message);
+		main.appendChild(node);
+    }
+    
+    function registerClickEvent(elementId, method) {
+		document.getElementById(elementId).onclick = function(e) {
+			e.stopPropagation();
+			removePopup();
+			if (typeof method === 'function') {
+				method(e);
+			}
+		};
+    }
+    
     function confirm(title, message, onYes, onNo) {
-        var main = document.querySelector("main");
-        var node = document.createElement("div");
-        node.id = "popup-veil";
-        node.innerHTML = createHtml(title, message);
-        main.appendChild(node);
+        addPopup(confirmTemplate, title, message);
+        registerClickEvent('popup-yes', onYes);
+        registerClickEvent('popup-veil', onNo);
+    }
 
-        document.getElementById('popup-yes').onclick = function(e) {
-            e.stopPropagation();
-            removePopup();
-            onYes();
-        };
-        document.getElementById('popup-veil').onclick = function(e) {
-            e.stopPropagation();
-            removePopup();
-            onNo();
-        };
+    function alert(title, message, onOk) {
+        addPopup(alertTemplate, title, message);
+        registerClickEvent('popup-veil', onOk);
     }
 
     return {
-        confirm: confirm
+        confirm: confirm,
+        alert: alert
     }
 });

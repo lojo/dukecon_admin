@@ -27,6 +27,7 @@
     padding: 10px;
 }
 .popup-content {
+    font-weight: normal;
     padding: 10px;
     line-height: 1.3em;
 }
