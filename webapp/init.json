@@ -1,0 +1,5 @@
+{
+  "conferences": "https://latest.dukecon.org/rest/conference/jl2017",
+  "events": "https://latest.dukecon.org/rest/events/jl2017",
+  "admin": "https://latest.dukecon.org/rest/admin/jl2017"
+}
