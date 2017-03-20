@@ -121,10 +121,6 @@ main * {
     vertical-align: text-top
 }
 
-.content-wrapper {
-    min-height: 80%
-}
-
 footer {
     background: #fff;
     bottom: 0;
@@ -143,20 +139,6 @@ footer span:last-child {
     right: 1em;
     padding: .2em 1em 0 0;
     font-size: smaller
-}
-
-.imprint {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 1em
-}
-
-.imprint p {
-    font-size: 11pt;
-    line-height: 15pt;
-    margin: 0;
-    padding: 0
 }
 
 #loading {
