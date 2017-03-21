@@ -1,4 +1,5 @@
 define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
+    "use strict";
 
     var request = null, app = null, initialized = false;
 
@@ -9,7 +10,7 @@ define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
             helper.enrichData(entry, result.metaData);
         });
 
-        app.talks = entries;
+        app.talks = entries || [];
         app.loading = false;
         app.error = false;
     }
@@ -18,7 +19,7 @@ define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
         console.log(error);
         popups.alert("Error", "There was an error: " + (error && error.status ? error.status: error));
         app.loading = false;
-        app.error = true;
+        app.error = app.talks.length === 0;
     }
 	
 	function loadTalks() {
@@ -57,7 +58,7 @@ define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
         app = new Vue({
             el: "main",
             data: {
-                talks: {},
+                talks: [],
                 update: confirmAndUpdate,
                 refresh: loadTalks,
                 loading: true,

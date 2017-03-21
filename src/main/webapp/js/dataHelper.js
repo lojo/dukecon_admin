@@ -1,4 +1,5 @@
 define(['moment'], function(moment) {
+	"use strict";
 	
 	function filterPastEvents(events) {
 		if (!Array.prototype.filter) {
@@ -32,6 +33,16 @@ define(['moment'], function(moment) {
 		return "unknown";
 	}
 
+	function findByEventId(events, eventId) {
+		var i;
+		for (i = 0; i < events.length; i += 1) {
+			if (events[i].id == eventId) {
+                return events[i];
+			}
+		}
+		return null;
+	}
+
 	/* ----- Exports -----*/
 	function filterAndSortEvents(events) {
 		return sortEventsByDate(filterPastEvents(events));
@@ -41,9 +52,22 @@ define(['moment'], function(moment) {
 		entry.roomName = getRoomName(entry.locationId, metaData.locations);
 		entry.formattedStart = moment(entry.start).format('MMM DD, HH:mm');
 	}
-	
-	return {
+
+    function addDeltaToConferences(events, delta) {
+        var i;
+        for (i = 0; i < delta.length; i += 1) {
+			var event = findByEventId(events, delta[i].eventId);
+			if (event) {
+				event.fullyBooked = delta[i].fullyBooked;
+				event.numberOfFavorites = delta[i].numberOfFavorites;
+			}
+        }
+        return events;
+    }
+
+    return {
 		enrichData: enrichData,
-		filterAndSortEvents: filterAndSortEvents
-	}
+		filterAndSortEvents: filterAndSortEvents,
+        addDeltaToConferences: addDeltaToConferences
+	};
 });

@@ -21,7 +21,7 @@
 <main>
     <div id="loading" v-if="loading"></div>
     <button v-on:click="refresh" id="refresh">&thinsp;</button>
-    <h2>Current talks</h2>
+    <h2 class="dark">Current talks</h2>
     <div class="error" v-if="error">Sorry, something went wrong!</div>
     <div v-if="!loading && !error">
         <table>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="talk">
                         <div class="label">Talk:</div>
-                        <div>{{ talk.title }}</div>
+                        <div>{{ talk.title }} &nbsp;<span v-if="talk.numberOfFavorites"><img src="img/StarFilled.png"> {{ talk.numberOfFavorites }}</span></div>
                     </div>
                 </td>
                 <td>

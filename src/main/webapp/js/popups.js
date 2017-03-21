@@ -1,4 +1,6 @@
 define(function() {
+    "use strict";
+
     var confirmTemplate =
         '<div class="popup">' +
         '  <div>' +
@@ -71,5 +73,5 @@ define(function() {
     return {
         confirm: confirm,
         alert: alert
-    }
+    };
 });
