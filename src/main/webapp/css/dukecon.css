@@ -5,12 +5,13 @@
 html, body {
     width: 100%;
     margin: 0;
-    color: #777
+    color: #777;
 }
 
 body {
     font-family: Arial, Ubuntu, Helvetica, Nimbus Sans L, Droid Sans, FreeSans, Liberation Sans, Trebuchet MS, sans-serif;
-    text-align: left
+    text-align: left;
+    overflow-y: scroll;
 }
 
 table, th, td {
@@ -70,7 +71,7 @@ h1 {
 }
 
 h2 {
-    font-size: 110%;
+    font-size: 120%;
     text-align: left
 }
 
@@ -160,6 +161,12 @@ footer span:last-child {
     color: #777;
     width: 50px;
     flex-shrink: 0;
+}
+.error {
+    text-align: center;
+    font-weight: bold;
+    color: darkred;
+    margin-top: 20%;
 }
 .popup-content em {
     font-style: normal;

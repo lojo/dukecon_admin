@@ -22,7 +22,8 @@
     <div id="loading" v-if="loading"></div>
     <button v-on:click="refresh" id="refresh">&thinsp;</button>
     <h2>Current talks</h2>
-    <div v-if="!loading">
+    <div class="error" v-if="error">Sorry, something went wrong!</div>
+    <div v-if="!loading && !error">
         <table>
             <tr>
                 <th>

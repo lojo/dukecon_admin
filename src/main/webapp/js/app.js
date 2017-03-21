@@ -16,6 +16,7 @@ define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
 
     function onError(error) {
         console.log(error);
+        popups.alert("Error", "There was an error: " + (error && error.status ? error.status: error));
         app.loading = false;
         app.error = true;
     }
