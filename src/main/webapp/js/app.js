@@ -1,4 +1,4 @@
-define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
+define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, helper, scroll) {
     "use strict";
 
     var request = null, app = null, initialized = false;
@@ -13,6 +13,7 @@ define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
         app.talks = entries || [];
         app.loading = false;
         app.error = false;
+        scroll.restore();
     }
 
     function onError(error) {
@@ -43,6 +44,7 @@ define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
             message,
             function() {
                 app.loading = true;
+                scroll.save();
                 request.update(app.talks[id], function() { app.loading = false }, onError);
                 loadTalks();
             },
