@@ -30,7 +30,6 @@ define(['dataHelper'], function (helper) {
     }
 
     function initialize(callback) {
-        console.log("Initializing...");
         httpRequest(
             "init.json",
             "GET",
@@ -43,6 +42,7 @@ define(['dataHelper'], function (helper) {
                 if (callback) {
                     callback();
                 }
+                console.log("Requests initialized");
             },
             function () {
                 console.log("Error during initialization!");

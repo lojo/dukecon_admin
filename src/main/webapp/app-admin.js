@@ -7,6 +7,8 @@ require.config({
     }
 });
 
-require(['app', 'request', 'domReady!'], function(app, request) {
-    app.initialize(request);
+require(['app', 'auth', 'request', 'domReady!'], function(app, auth, request) {
+    auth.initialize(function(data) {
+        app.initialize(request, data);
+    });
 });

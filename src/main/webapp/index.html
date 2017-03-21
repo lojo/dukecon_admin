@@ -15,6 +15,15 @@
 <body>
 <header class="darkBack">
     <img src="img/logo_javaland.gif"/>
+
+    <div v-if="loginAvailable" id="login-area">
+        <div>
+            <a class="button" v-if="!loggedIn" v-on:click="login"><img alt="Sign in/Register" title="Sign in/Register" src="img/unlock_24px.svg"></a>
+            <a class="button" v-if="loggedIn" v-on:click="logout"><img alt="Sign Out" title="Sign Out" src="img/lock_24px.svg"></a>
+        </div>
+    </div>
+
+
     <h1>Javaland Room Control</h1>
 </header>
 <noscript><br><br><br><br>Please enable Javascript to use this site.</noscript>
@@ -23,6 +32,7 @@
     <button v-on:click="refresh" id="refresh">&thinsp;</button>
     <h2 class="dark">Current talks</h2>
     <div class="error" v-if="error">Sorry, something went wrong!</div>
+    <div class="warn" v-if="!loggedIn">Please log in with your DOAG account!</div>
     <div v-if="!loading && !error">
         <table>
             <tr>

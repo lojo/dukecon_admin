@@ -1,7 +1,7 @@
 define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, helper, scroll) {
     "use strict";
 
-    var request = null, app = null, initialized = false;
+    var request = null, app = null;
 
     function prepareData(result) {
         var entries = result.events;
@@ -29,6 +29,10 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 	}
 
     function confirmAndUpdate(event) {
+        if (!app.loggedIn) {
+            popups.alert("Please Log In", "You must be logged in to do this.");
+            return;
+        }
         var id = event.currentTarget.id;
 
         var status = app.talks[id].fullyBooked ? "Fully booked" : "Free";
@@ -54,8 +58,8 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
             }
         );
     }
-    
-    function initialize(req) {
+
+    function initialize(req, authData) {
         request = req;
         app = new Vue({
             el: "main",
@@ -64,13 +68,13 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
                 update: confirmAndUpdate,
                 refresh: loadTalks,
                 loading: true,
-                error: false
+                error: false,
+                loggedIn: authData.loggedIn
             }
         });
-        initialized = true;
-        
+
         loadTalks();
-        console.log("Initialized");
+        console.log("App initialized");
     }
 
     return {

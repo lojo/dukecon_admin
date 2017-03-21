@@ -161,7 +161,6 @@ footer span:last-child {
 }
 .favs {
     white-space: nowrap;
-    width: 30px;
     flex-shrink: 0;
     color: #777;
 }
@@ -176,6 +175,11 @@ footer span:last-child {
     font-weight: bold;
     color: darkred;
     margin-top: 20%;
+}
+.warn {
+    font-weight: bold;
+    text-align: center;
+    color: #bf5a00;
 }
 .popup-content em {
     font-style: normal;
@@ -215,4 +219,32 @@ button {
 }
 #refresh:hover {
     opacity: 0.7;
+}
+
+#login-area {
+    flex-grow: 1;
+    text-align: right;
+}
+#login-area div {
+    text-align: left;
+    display: inline-block;
+}
+#login-area img {
+    color: white;
+    height: 30px;
+    width: 30px;
+    vertical-align: middle;
+    margin: 2px 0 0;
+}
+#login-area img:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+#login-area .button {
+    font-size: 80%;
+    vertical-align: middle;
+    display: inline-block;
+    background: transparent;
+    padding:0;
+    margin:0;
 }
