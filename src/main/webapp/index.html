@@ -38,6 +38,7 @@
                     <div class="room dark">
                         <div class="label">Room:</div>
                         <div>{{ talk.roomName }}</div>
+                        <div class="favs" v-if="talk.numberOfFavorites"><img src="img/StarFilled.png">&nbsp;{{ talk.numberOfFavorites }}</div>
                     </div>
                     <div class="time">
                         <div class="label">Time:</div>
@@ -45,7 +46,7 @@
                     </div>
                     <div class="talk">
                         <div class="label">Talk:</div>
-                        <div>{{ talk.title }} &nbsp;<span v-if="talk.numberOfFavorites"><img src="img/StarFilled.png"> {{ talk.numberOfFavorites }}</span></div>
+                        <div>{{ talk.title }}</div>
                     </div>
                 </td>
                 <td>

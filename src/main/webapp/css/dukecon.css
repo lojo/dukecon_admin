@@ -156,6 +156,15 @@ footer span:last-child {
     font-weight: bold;
     display: flex;
 }
+.room div:nth-child(2), .talk div:last-child, .time div:last-child {
+    flex-grow: 1;
+}
+.favs {
+    white-space: nowrap;
+    width: 30px;
+    flex-shrink: 0;
+    color: #777;
+}
 .label {
     font-weight: normal;
     color: #777;
