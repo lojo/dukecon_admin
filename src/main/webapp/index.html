@@ -20,8 +20,9 @@
 <noscript><br><br><br><br>Please enable Javascript to use this site.</noscript>
 <main>
     <div id="loading" v-if="loading"></div>
+    <button v-on:click="refresh" id="refresh">&thinsp;</button>
+    <h2>Current talks</h2>
     <div v-if="!loading">
-        <h2>Current talks</h2>
         <table>
             <tr>
                 <th>
@@ -47,7 +48,7 @@
                     </div>
                 </td>
                 <td>
-                    <input type="checkbox" v-bind:id="index" v-model="talk.fullyBooked" v-on:change="doUpdate"><label v-bind:for="index"></label>
+                    <input type="checkbox" v-bind:id="index" v-model="talk.fullyBooked" v-on:change="update"><label v-bind:for="index"></label>
                 </td>
             </tr>
         </table>

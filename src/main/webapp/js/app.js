@@ -1,23 +1,12 @@
-define(['vue', 'moment', 'popups'], function(Vue, moment, popups) {
+define(['vue', 'popups', 'dataHelper'], function(Vue, popups, helper) {
 
     var request = null, app = null, initialized = false;
-
-    function getRoomName(roomId, rooms) {
-        var i;
-        for (i = 0; i < rooms.length; i++) {
-            if (rooms[i].id === roomId) {
-                return rooms[i].names.en;
-            }
-        }
-        return "unknown";
-    }
 
     function prepareData(result) {
         var entries = result.events;
 
         entries.forEach(function(entry) {
-            entry.roomName = getRoomName(entry.locationId, result.metaData.locations);
-            entry.formattedStart = moment(entry.start).format('MMM DD, HH:mm');
+            helper.enrichData(entry, result.metaData);
         });
 
         app.talks = entries;
@@ -30,6 +19,11 @@ define(['vue', 'moment', 'popups'], function(Vue, moment, popups) {
         app.loading = false;
         app.error = true;
     }
+	
+	function loadTalks() {
+		app.loading = true;
+		request.get(prepareData, onError);
+	}
 
     function confirmAndUpdate(event) {
         var id = event.currentTarget.id;
@@ -47,7 +41,8 @@ define(['vue', 'moment', 'popups'], function(Vue, moment, popups) {
             message,
             function() {
                 app.loading = true;
-                request.update(app.talks, function() { app.loading = false }, onError);
+                request.update(app.talks[id], function() { app.loading = false }, onError);
+                loadTalks();
             },
             function() {
                 app.talks[id].fullyBooked = !app.talks[id].fullyBooked;
@@ -55,20 +50,22 @@ define(['vue', 'moment', 'popups'], function(Vue, moment, popups) {
             }
         );
     }
-
+    
     function initialize(req) {
         request = req;
         app = new Vue({
             el: "main",
             data: {
                 talks: {},
-                doUpdate: confirmAndUpdate,
+                update: confirmAndUpdate,
+                refresh: loadTalks,
                 loading: true,
                 error: false
             }
         });
         initialized = true;
-        request.get(prepareData, onError);
+        
+        loadTalks();
         console.log("Initialized");
     }
 
