@@ -32,7 +32,7 @@
         <dukecon.default.conferenceid>jl2017</dukecon.default.conferenceid>
         <dukecon.server.urls.base>https://localhost:8080/develop</dukecon.server.urls.base>
         <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
-        <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/events/${dukecon.default.conferenceid}</dukecon.server.urls.events>
+        <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
         <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
     </properties>
 
@@ -42,7 +42,7 @@
             <properties>
                 <dukecon.server.urls.base>https://latest.dukecon.org/javaland/2017</dukecon.server.urls.base>
                 <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
-                <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/events/${dukecon.default.conferenceid}</dukecon.server.urls.events>
+                <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
                 <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
             </properties>
         </profile>
