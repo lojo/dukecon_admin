@@ -1,14 +1,20 @@
 define(['dataHelper'], function (helper) {
-    "use strict;"
+    "use strict";
 
-    var conferenceUrl = null, bookingsUrl = null, adminUrl = null, keyCloakUrl = null, errorState = false;
+	var urls = {
+		conferenceUrl: null,
+		bookingsUrl: null,
+		adminUrl: null,
+		keyCloakUrl: null,
+		errorState: false
+	};
 
     function isInitialized() {
-        return (conferenceUrl !== null && bookingsUrl !== null && adminUrl !== null && keyCloakUrl !== null) || errorState;
+        return (urls.conferenceUrl !== null && urls.bookingsUrl !== null && urls.adminUrl !== null && urls.keyCloakUrl !== null) || urls.errorState;
     }
 
     function httpRequest(url, method, onSuccess, onError) {
-        if (errorState) {
+        if (urls.errorState) {
             if (onError) {
                 onError({status: 0, statusMessage: "error during initializiation"});
             }
@@ -34,27 +40,27 @@ define(['dataHelper'], function (helper) {
             "init.json",
             "GET",
             function (result) {
-                keyCloakUrl = result.keycloak;
-                conferenceUrl = result.conferences;
-                bookingsUrl = result.events;
-                adminUrl = result.admin || "";
-                adminUrl = adminUrl.replace(/\/$/ig, ""); // make sure there is no space at the end
-                errorState = false;
+                urls.keyCloakUrl = result.keycloak;
+				urls.conferenceUrl = result.conferences;
+				urls.bookingsUrl = result.events;
+				urls.adminUrl = result.admin || "";
+				urls.adminUrl = urls.adminUrl.replace(/\/$/ig, ""); // make sure there is no space at the end
+				urls.errorState = false;
                 if (callback) {
-                    callback(keyCloakUrl);
+                    callback(urls);
                 }
                 console.log("Requests initialized");
             },
             function () {
                 console.log("Error during initialization!");
-                errorState = true;
+				urls.errorState = true;
             }
         );
     }
 
     function getDelta(conference, onSuccess, onError) {
         httpRequest(
-            bookingsUrl,
+			urls.bookingsUrl,
             "GET",
             function (result) {
                 result.events = helper.addDeltaToConferences(conference.events, result);
@@ -67,7 +73,7 @@ define(['dataHelper'], function (helper) {
     function getConferences(onSuccess, onError) {
         function doRequest() {
             httpRequest(
-                conferenceUrl,
+				urls.conferenceUrl,
                 "GET",
                 onSuccess,
                 onError
@@ -97,7 +103,7 @@ define(['dataHelper'], function (helper) {
         if (!isInitialized()) {
             initialize();
         }
-        httpRequest(adminUrl + "/" + talk.id, talk.fullyBooked ? "POST" : "DELETE", onSuccess, onError);
+        httpRequest(urls.adminUrl + "/" + talk.id, talk.fullyBooked ? "POST" : "DELETE", onSuccess, onError);
     }
 
     return {
