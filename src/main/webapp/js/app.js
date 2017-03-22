@@ -3,6 +3,29 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 
     var request = null, app = null;
 
+    function quickFilterTalks(e) {
+		if (e.keyCode == 27) { // escape key maps to keycode `27`
+			app.quickFilter = "";
+		}
+		app.talks = app.allTalks;
+		var filterBy = app.quickFilter.toLowerCase();
+    	if (filterBy.length >= 2) {
+			app.talks = app.allTalks.filter(function(talk) {
+				var freeOrFull = false;
+				if (filterBy === "fr" || filterBy === "fre" || filterBy === "free") {
+					freeOrFull = freeOrFull || !talk.fullyBooked;
+				}
+				if (filterBy === "fu" || filterBy === "ful" || filterBy === "full") {
+					freeOrFull = freeOrFull || talk.fullyBooked;
+				}
+				return freeOrFull ||
+					talk.title.toLowerCase().indexOf(filterBy) >=0 ||
+					talk.roomName.toLowerCase().indexOf(filterBy) >=0 ||
+					talk.formattedStart.toLowerCase().indexOf(filterBy) >=0;
+			});
+		}
+	}
+     
     function prepareData(result) {
         var entries = result.events;
 
@@ -11,6 +34,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
         });
 
         app.talks = entries || [];
+        app.allTalks = entries || [];
         app.loading = false;
         app.error = false;
         scroll.restore();
@@ -25,6 +49,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 	
 	function loadTalks() {
 		app.loading = true;
+		app.quickFilter = "";
 		request.get(prepareData, onError);
 	}
 
@@ -61,10 +86,14 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 
     function initialize(req, authData) {
         request = req;
-        app = new Vue({
+	
+		app = new Vue({
             el: "main",
             data: {
                 talks: [],
+                allTalks: [],
+                quickFilter: "",
+				quickFilterTalks: quickFilterTalks,
                 update: confirmAndUpdate,
                 refresh: loadTalks,
                 loading: true,
