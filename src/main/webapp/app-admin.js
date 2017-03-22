@@ -8,7 +8,9 @@ require.config({
 });
 
 require(['app', 'auth', 'request', 'domReady!'], function(app, auth, request) {
-    auth.initialize(function(data) {
-        app.initialize(request, data);
+    request.initialize(function(keyCloakUrl) {
+        auth.initialize(keyCloakUrl, function(authData) {
+            app.initialize(request, authData);
+        });
     });
 });

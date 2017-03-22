@@ -1,10 +1,10 @@
 define(['dataHelper'], function (helper) {
     "use strict;"
 
-    var conferenceUrl = null, bookingsUrl = null, adminUrl = null, errorState = false;
+    var conferenceUrl = null, bookingsUrl = null, adminUrl = null, keyCloakUrl = null, errorState = false;
 
     function isInitialized() {
-        return (conferenceUrl !== null && bookingsUrl !== null && adminUrl !== null) || errorState;
+        return (conferenceUrl !== null && bookingsUrl !== null && adminUrl !== null && keyCloakUrl !== null) || errorState;
     }
 
     function httpRequest(url, method, onSuccess, onError) {
@@ -34,13 +34,14 @@ define(['dataHelper'], function (helper) {
             "init.json",
             "GET",
             function (result) {
+                keyCloakUrl = result.keycloak;
                 conferenceUrl = result.conferences;
                 bookingsUrl = result.events;
                 adminUrl = result.admin || "";
                 adminUrl = adminUrl.replace(/\/$/ig, ""); // make sure there is no space at the end
                 errorState = false;
                 if (callback) {
-                    callback();
+                    callback(keyCloakUrl);
                 }
                 console.log("Requests initialized");
             },
@@ -100,6 +101,7 @@ define(['dataHelper'], function (helper) {
     }
 
     return {
+		initialize : initialize,
         get: getList,
         update: update
     };

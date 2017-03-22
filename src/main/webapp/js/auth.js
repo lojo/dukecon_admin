@@ -1,7 +1,7 @@
 define(['vue', 'keycloak'], function (Vue, Keycloak) {
     "use strict";
 
-    var keycloakAuth = new Keycloak("../rest/keycloak.json");
+    var keycloakAuth = null;
     var enforceLogin = false;
 
     var logout = function () {
@@ -18,18 +18,6 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
             .error  (function () { data.loggedIn = false; });
     };
 
-    keycloakAuth.onAuthSuccess = function () {
-        console.log("Auth Success!!");
-    };
-
-    keycloakAuth.onAuthRefreshSuccess = function () {
-        console.log("Auth Refreshed!!");
-    };
-
-    keycloakAuth.onAuthLogout = function () {
-        console.log("Logged out!!");
-    };
-
     var data = new Vue({
         el: "#login-area",
         data: {
@@ -40,7 +28,22 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
         }
     });
 
+    function registerCallbacks() {
+		keycloakAuth.onAuthSuccess = function () {
+			console.log("Auth Success!!");
+		};
+	
+		keycloakAuth.onAuthRefreshSuccess = function () {
+			console.log("Auth Refreshed!!");
+		};
+	
+		keycloakAuth.onAuthLogout = function () {
+			console.log("Logged out!!");
+		};
+    }
+    
     function initKeyCloak(vueApp, callback) {
+        // issue I had: when KC init encounters an error 400, neither success nor error get called
         keycloakAuth.init({
             onLoad: enforceLogin ? "login-required" : "check-sso"
         }).success(function (authenticated) {
@@ -56,17 +59,20 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
             if (callback) {
                 callback(data);
             }
-        }).error(function () {
+        }).error(function (err) {
             vueApp.loginAvailable = false;
             console.log("Error initializing keycloak");
+            console.log(err);
             if (callback) {
                 callback(data);
             }
         });
     }
 
-    function initialize(callback) {
-        initKeyCloak(data, callback);
+    function initialize(keyCloakUrl, callback) {
+		keycloakAuth = new Keycloak(keyCloakUrl);
+        registerCallbacks();
+		initKeyCloak(data, callback);
         console.log("Auth initialized");
     }
 
