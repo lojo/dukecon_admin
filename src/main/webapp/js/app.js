@@ -56,6 +56,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
     function confirmAndUpdate(event) {
         if (!app.loggedIn) {
             popups.alert("Please Log In", "You must be logged in to do this.");
+			app.talks[id].fullyBooked = !app.talks[id].fullyBooked;
             return;
         }
         var id = event.currentTarget.id;
