@@ -82,7 +82,7 @@ h2 div {
     flex-grow: 1;
 }
 
-main {
+#main {
     margin: 3.5em auto 2.5em;
     max-width: 1000px;
     padding: 1em;
@@ -137,7 +137,7 @@ input[type=checkbox]:checked + label:hover:before {
     background: #cc0000;
 }
 
-main * {
+#main * {
     transition: height .5s ease, width .5s ease;
     vertical-align: text-top
 }
@@ -213,7 +213,7 @@ footer span:last-child {
 }
 
 @media (max-width: 480px) {
-    main {
+    #main {
         font-size: 95%;
         margin-bottom: 3.5em;
         padding: 0.5em;

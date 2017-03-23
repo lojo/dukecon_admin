@@ -89,7 +89,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
         request = req;
 	
 		app = new Vue({
-            el: "main",
+            el: "#main",
             data: {
                 talks: [],
                 allTalks: [],
