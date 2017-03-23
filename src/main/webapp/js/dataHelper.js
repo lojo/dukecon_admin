@@ -6,10 +6,10 @@ define(['moment'], function(moment) {
 			console.log("filtering is not supported on this browser, sorry!");
 			return events;
 		}
-		var now = new Date();
-		//var now = new Date('2017-03-29T9:00:00.000Z'); // for testing
+		var now = new moment();
+		//var now = moment('2017-03-29T15:00:00.000'); // for testing
 		function filterByDate(event) {
-			return new Date(event.end) > now;
+			return moment(event.end).isAfter(now);
 		}
 		
 		return events.filter(filterByDate);
@@ -17,7 +17,10 @@ define(['moment'], function(moment) {
 	
 	function sortEventsByDate(events) {
 		function sortByStartAscending(event1, event2) {
-			return event1.start > event2.start;
+			if (event1.start > event2.start) {
+				return 1;
+			}
+			return event1.start < event2.start ? -1 : 0;
 		}
 		events.sort(sortByStartAscending);
 		return events;

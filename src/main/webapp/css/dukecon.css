@@ -139,7 +139,7 @@ input[type=checkbox]:checked + label:hover:before {
 
 #main * {
     transition: height .5s ease, width .5s ease;
-    vertical-align: text-top
+    vertical-align: top;
 }
 
 footer {

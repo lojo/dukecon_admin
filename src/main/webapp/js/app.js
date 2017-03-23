@@ -42,7 +42,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 
     function onError(error) {
         console.log(error);
-        popups.alert("Error", "There was an error: " + (error && error.status ? error.status: error));
+        popups.alert("Error", "There was an error: " + (error && error.status ? error.status: JSON.stringify(error, null, " ")).replace(/\n/g, "<br>"));
         app.loading = false;
         app.error = app.talks.length === 0;
     }
@@ -52,7 +52,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 		app.quickFilter = "";
 		request.get(prepareData, onError);
 	}
-
+	
     function confirmAndUpdate(event) {
 		var id = event.currentTarget.id;
         if (!app.loggedIn) {
@@ -60,7 +60,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 			app.talks[id].fullyBooked = !app.talks[id].fullyBooked;
             return;
         }
-
+	
         var status = app.talks[id].fullyBooked ? "Fully booked" : "Free";
         var message = "<span>Room: </span><em class=\"dark\">"
             + app.talks[id].roomName
@@ -75,7 +75,16 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
             function() {
                 app.loading = true;
                 scroll.save();
-                request.update(app.talks[id], function() { app.loading = false }, onError);
+                request.update(
+                	app.talks[id],
+					function() {
+                		app.loading = false;
+                	},
+					function(err) {
+						app.talks[id].fullyBooked = !app.talks[id].fullyBooked;
+                		onError(err);
+                	}
+                );
                 loadTalks();
             },
             function() {
