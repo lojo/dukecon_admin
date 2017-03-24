@@ -4,7 +4,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
     var request = null, app = null;
 
     function quickFilterTalks(e) {
-		if (e.keyCode == 27) { // escape key maps to keycode `27`
+		if (e.keyCode === 27) { // escape key maps to keycode `27`
 			app.quickFilter = "";
 		}
 		app.talks = app.allTalks;
@@ -83,7 +83,8 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 					function(err) {
 						app.talks[id].fullyBooked = !app.talks[id].fullyBooked;
                 		onError(err);
-                	}
+                	},
+                	app.token
                 );
                 loadTalks();
             },
@@ -108,7 +109,8 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
                 refresh: loadTalks,
                 loading: true,
                 error: false,
-                loggedIn: authData.loggedIn
+                loggedIn: authData.loggedIn,
+                token: authData.token
             }
         });
 

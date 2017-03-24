@@ -13,16 +13,25 @@ define(['dataHelper'], function (helper) {
         return (urls.conferenceUrl !== null && urls.bookingsUrl !== null && urls.adminUrl !== null && urls.keyCloakUrl !== null) || urls.errorState;
     }
 
-    function httpRequest(url, method, onSuccess, onError) {
+    function httpRequest(url, method, onSuccess, onError, headers) {
         if (urls.errorState) {
             if (onError) {
                 onError({status: 0, statusMessage: "error during initializiation"});
             }
             return;
         }
+
         console.log(method + " " + url);
         var xhttp = new XMLHttpRequest();
         xhttp.open(method, url, true);
+
+        if (headers) {
+            var key, headerKeys = Object.keys(headers);
+            for (key in headerKeys) {
+                xhttp.setRequestHeader(headerKeys[key], headers[headerKeys[key]]);
+            }
+        }
+
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4) {
                 if (this.status >= 200 && status <= 202 && onSuccess) {
@@ -99,11 +108,16 @@ define(['dataHelper'], function (helper) {
         );
     }
 
-    function update(talk, onSuccess, onError) {
+    function update(talk, onSuccess, onError, keycloakToken) {
         if (!isInitialized()) {
             initialize();
         }
-        httpRequest(urls.adminUrl + "/" + talk.id, talk.fullyBooked ? "POST" : "DELETE", onSuccess, onError);
+
+        var headers = {};
+        if (keycloakToken) {
+            headers.Authorization = "Bearer " + keycloakToken;
+        }
+        httpRequest(urls.adminUrl + "/" + talk.id, talk.fullyBooked ? "POST" : "DELETE", onSuccess, onError, headers);
     }
 
     return {

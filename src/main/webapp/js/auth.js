@@ -7,6 +7,7 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
     var logout = function () {
         keycloakAuth.logout().success(function () {
             data.loggedIn = false;
+            data.token = null;
         }).error(function () {
             console.log("WTF");
         });
@@ -24,7 +25,8 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
             loginAvailable: true,
             loggedIn: false,
             login: login,
-            logout: logout
+            logout: logout,
+            token: null
         }
     });
 
@@ -50,6 +52,7 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
             vueApp.loggedIn = authenticated;
             console.log('Authenticated: ' + authenticated);
             if (authenticated) {
+                data.token = keycloakAuth.token;
                 console.log('local time: ' + new Date().getTime() / 1000);
                 console.log('iat: ' + keycloakAuth.tokenParsed.iat);
                 console.log('diff: ' + (new Date().getTime() / 1000 - keycloakAuth.tokenParsed.iat));
@@ -61,6 +64,7 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
             }
         }).error(function (err) {
             vueApp.loginAvailable = false;
+            data.token = null;
             console.log("Error initializing keycloak");
             console.log(err);
             if (callback) {
