@@ -44,12 +44,12 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
 		};
     }
     
-    function initKeyCloak(vueApp, callback) {
+    function initKeyCloak(callback) {
         // issue I had: when KC init encounters an error 400, neither success nor error get called
         keycloakAuth.init({
             onLoad: enforceLogin ? "login-required" : "check-sso"
         }).success(function (authenticated) {
-            vueApp.loggedIn = authenticated;
+            data.loggedIn = authenticated;
             console.log('Authenticated: ' + authenticated);
             if (authenticated) {
                 data.token = keycloakAuth.token;
@@ -61,7 +61,6 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
                 window.setInterval(function () {
                     keycloakAuth.updateToken(15).success(function () {
                         data.token = keycloakAuth.token;
-                        vueApp.token = keycloakAuth.token;
                         console.info('updateToken success.')
                     }).error(function () {
                         console.error('Fehler beim Aktualisieren des Keycloak-Tokens')
@@ -72,7 +71,7 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
                 callback(data);
             }
         }).error(function (err) {
-            vueApp.loginAvailable = false;
+            data.loginAvailable = false;
             data.token = null;
             console.log("Error initializing keycloak");
             console.log(err);
@@ -85,7 +84,7 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
     function initialize(keyCloakUrl, callback) {
 		keycloakAuth = new Keycloak(keyCloakUrl);
         registerCallbacks();
-		initKeyCloak(data, callback);
+		initKeyCloak(callback);
         console.log("Auth initialized");
     }
 

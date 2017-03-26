@@ -1,7 +1,7 @@
 define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, helper, scroll) {
     "use strict";
 
-    var request = null, app = null;
+    var request = null, authData = null, app = null;
 
     function quickFilterTalks(e) {
 		if (e.keyCode === 27) { // escape key maps to keycode `27`
@@ -55,7 +55,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 	
     function confirmAndUpdate(event) {
 		var id = event.currentTarget.id;
-        if (!app.loggedIn) {
+        if (!authData.loggedIn) {
             popups.alert("Please Log In", "You must be logged in to do this.");
 			app.talks[id].fullyBooked = !app.talks[id].fullyBooked;
             return;
@@ -84,7 +84,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 						app.talks[id].fullyBooked = !app.talks[id].fullyBooked;
                 		onError(err);
                 	},
-                	app.token
+                	authData.token
                 );
                 loadTalks();
             },
@@ -95,8 +95,9 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
         );
     }
 
-    function initialize(req, authData) {
+    function initialize(req, auth) {
         request = req;
+        authData = auth;
 	
 		app = new Vue({
             el: "#main",
@@ -108,9 +109,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
                 update: confirmAndUpdate,
                 refresh: loadTalks,
                 loading: true,
-                error: false,
-                loggedIn: authData.loggedIn,
-                token: authData.token
+                error: false
             }
         });
 
