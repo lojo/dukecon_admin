@@ -34,7 +34,8 @@ define(['dataHelper'], function (helper) {
 
         xhttp.onreadystatechange = function () {
             if (this.readyState === 4) {
-                if (this.status >= 200 && status <= 202 && onSuccess) {
+                console.log("Request returned " + this.status);
+                if (this.status >= 200 && status <= 205 && onSuccess) {
                     onSuccess(this.response ? JSON.parse(this.response) : null);
                 } else if (onError) {
                     onError(this);
