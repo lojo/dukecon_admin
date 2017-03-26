@@ -42,7 +42,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 
     function onError(error) {
         console.log(error);
-        popups.alert("Error", "There was an error: " + (error && error.status ? error.status: JSON.stringify(error, null, " ")).replace(/\n/g, "<br>"));
+        popups.alert("Error", "There was an error: " + (error && error.status ? error.status: JSON.stringify(error, null, " ").replace(/\n/g, "<br>")));
         app.loading = false;
         app.error = app.talks.length === 0;
     }
