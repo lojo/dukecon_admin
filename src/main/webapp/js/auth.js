@@ -58,6 +58,13 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
                 console.log('diff: ' + (new Date().getTime() / 1000 - keycloakAuth.tokenParsed.iat));
                 console.log('exp in: ' + (keycloakAuth.tokenParsed.exp - new Date().getTime() / 1000));
                 console.log('isExpired: ' + keycloakAuth.isTokenExpired());
+                window.setInterval(function () {
+                    keycloakAuth.updateToken(15).success(function () {
+                        console.info('updateToken success.')
+                    }).error(function () {
+                        console.error('Fehler beim Aktualisieren des Keycloak-Tokens')
+                    })
+                }, 10000);
             }
             if (callback) {
                 callback(data);
