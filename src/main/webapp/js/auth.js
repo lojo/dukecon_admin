@@ -61,6 +61,7 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
                 window.setInterval(function () {
                     keycloakAuth.updateToken(15).success(function () {
                         data.token = keycloakAuth.token;
+                        vueApp.token = keycloakAuth.token;
                         console.info('updateToken success.')
                     }).error(function () {
                         console.error('Fehler beim Aktualisieren des Keycloak-Tokens')
