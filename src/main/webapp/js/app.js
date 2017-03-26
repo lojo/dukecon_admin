@@ -109,7 +109,8 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
                 update: confirmAndUpdate,
                 refresh: loadTalks,
                 loading: true,
-                error: false
+                error: false,
+                loggedIn: auth.loggedIn
             }
         });
 
