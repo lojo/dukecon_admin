@@ -44,6 +44,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
         console.log(error);
         popups.alert("Error", "There was an error: " + (error && error.status ? error.status: JSON.stringify(error, null, " ").replace(/\n/g, "<br>")));
         app.loading = false;
+        app.updating = false;
         app.error = app.talks.length === 0;
     }
 	
@@ -55,10 +56,13 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 
 	function sendWithBearer(event) {
         event.preventDefault();
+        app.updating = true;
         var href = event.currentTarget.href;
         console.log(href);
         request.getWithToken(href, authData.token, function(result) {
-            popups.alert("Refresh Data", "Success!");
+            popups.alert("Refresh Data", "Success!", function() {
+                app.updating = false;
+            });
         }, onError);
     }
 	
@@ -120,7 +124,8 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
                 loading: true,
                 error: false,
                 loggedIn: auth.loggedIn,
-                sendWithBearer: sendWithBearer
+                sendWithBearer: sendWithBearer,
+                updating: false
             }
         });
 
