@@ -57,7 +57,9 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
         event.preventDefault();
         var href = event.currentTarget.href;
         console.log(href);
-        request.getWithToken(href, authData.token);
+        request.getWithToken(href, authData.token, function(result) {
+            popups.alert("Refresh Data", "Success!");
+        }, onError);
     }
 	
     function confirmAndUpdate(event) {

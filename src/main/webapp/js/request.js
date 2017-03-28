@@ -97,7 +97,7 @@ define(['dataHelper'], function (helper) {
 
     }
 
-    function getWithToken(url, keycloakToken) {
+    function getWithToken(url, keycloakToken, onSuccess, onError) {
         var headers = {};
         function doRequest() {
             if (keycloakToken) {
@@ -108,8 +108,9 @@ define(['dataHelper'], function (helper) {
                 "GET",
                 function(data) {
 				    console.log(data);
+				    onSuccess(data);
                 },
-                function() {},
+                onError,
                 headers
             );
         }

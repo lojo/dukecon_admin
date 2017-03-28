@@ -34,7 +34,7 @@
         <input type="search" v-on:keyup="quickFilterTalks" v-on:change="quickFilterTalks" v-on:search="quickFilterTalks" placeholder="Quick Filter" aria-label="Quick filter" v-model="quickFilter">
         <button v-on:click="refresh" id="refresh">&thinsp;</button>
     </h2>
-    <div><a v-on:click="sendWithBearer" href="https://latest.dukecon.org/javaland/2017/rest/conferences/update/jl2017">Update Talks</a></div>
+    <div><a v-if="loggedIn" v-on:click="sendWithBearer" href="https://latest.dukecon.org/javaland/2017/rest/conferences/update/jl2017">Force Update of Talks Data</a></div>
     <div class="error" v-if="error">Sorry, something went wrong!</div>
     <div class="warn" v-if="!loggedIn">Please log in with your DOAG account!</div>
     <div v-if="!loading && !error">
