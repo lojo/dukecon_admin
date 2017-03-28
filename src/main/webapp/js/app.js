@@ -52,6 +52,13 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
 		app.quickFilter = "";
 		request.get(prepareData, onError);
 	}
+
+	function sendWithBearer(event) {
+        event.preventDefault();
+        var href = event.currentTarget.href;
+        console.log(href);
+        request.getWithToken(href, authData.token);
+    }
 	
     function confirmAndUpdate(event) {
 		var id = event.currentTarget.id;
@@ -110,7 +117,8 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper'], function(Vue, popups, he
                 refresh: loadTalks,
                 loading: true,
                 error: false,
-                loggedIn: auth.loggedIn
+                loggedIn: auth.loggedIn,
+                sendWithBearer: sendWithBearer
             }
         });
 

@@ -97,6 +97,31 @@ define(['dataHelper'], function (helper) {
 
     }
 
+    function getWithToken(url, keycloakToken) {
+        var headers = {};
+        function doRequest() {
+            if (keycloakToken) {
+                headers.Authorization = "Bearer " + keycloakToken;
+            }
+            httpRequest(
+				url,
+                "GET",
+                function(data) {
+				    console.log(data);
+                },
+                function() {},
+                headers
+            );
+        }
+
+        if (!isInitialized()) {
+            initialize(doRequest);
+        } else {
+            doRequest();
+        }
+
+    }
+
 
     function getList(onSuccess, onError) {
         getConferences(
@@ -123,6 +148,7 @@ define(['dataHelper'], function (helper) {
     return {
 		initialize : initialize,
         get: getList,
-        update: update
+        update: update,
+        getWithToken: getWithToken
     };
 });
