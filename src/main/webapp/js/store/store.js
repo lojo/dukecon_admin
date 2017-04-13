@@ -5,7 +5,6 @@ define([], function() {
 		loading: true,
 		error: false,
 		loginAvailable: true,
-		loggedIn: false,
 		token: null,
 		loggedIn: false,
 		updating: false,
