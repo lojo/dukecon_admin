@@ -1,6 +1,5 @@
-define(['computed', 'talks', 'auth'], function(computed, talks, auth) {
+define(['talks', 'auth'], function(talks, auth) {
 	return {
-		computed: computed,
 		methodsForTalks: talks,
 		methodsForAuth: {
 			login: auth.login,

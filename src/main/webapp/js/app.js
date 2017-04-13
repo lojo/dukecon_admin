@@ -1,4 +1,4 @@
-define(['vue', 'popups', 'dataHelper', 'scrollHelper', 'store', 'methods'], function(Vue, popups, helper, scroll, store, methods) {
+define(['vue', 'store', 'methods', 'computed'], function(Vue, store, methods, computed) {
     "use strict";
 
     function initialize() {
@@ -12,7 +12,7 @@ define(['vue', 'popups', 'dataHelper', 'scrollHelper', 'store', 'methods'], func
             el: "#main",
             data: store,
 			methods:  methods.methodsForTalks,
-			computed: methods.computed
+			computed: computed
         });
 
         methods.methodsForTalks.refresh();
