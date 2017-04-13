@@ -2,8 +2,14 @@ require.config({
     baseUrl: "js",
 
     paths: {
-        vue : 'vue.min',
-        moment: 'moment-with-locales-2.11.2'
+        popups: 'utils/popups',
+        scrollHelper: 'utils/scrollHelper',
+        dataHelper: 'utils/dataHelper',
+        request: 'utils/request',
+        vue : 'lib/vue.min',
+        moment: 'lib/moment-with-locales-2.11.2',
+        keycloak: 'lib/keycloak',
+        domReady: 'lib/domReady'
     }
 });
 
