@@ -263,8 +263,12 @@ button {
 #login-area .button {
     font-size: 80%;
     vertical-align: middle;
-    display: inline-block;
     background: transparent;
     padding:0;
     margin:0;
+    display: none;
 }
+#login-area .button.show {
+    display: inline-block;
+}
+

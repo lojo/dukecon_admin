@@ -1,4 +1,4 @@
-define(['vue', 'keycloak'], function (Vue, Keycloak) {
+define(['store', 'keycloak'], function (store, Keycloak) {
     "use strict";
 
     var keycloakAuth = null;
@@ -6,8 +6,8 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
 
     var logout = function () {
         keycloakAuth.logout().success(function () {
-            data.loggedIn = false;
-            data.token = null;
+            store.loggedIn = false;
+            store.token = null;
         }).error(function () {
             console.log("WTF");
         });
@@ -15,20 +15,9 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
 
     var login = function () {
         keycloakAuth.login()
-            .success(function () { data.loggedIn = true; })
-            .error  (function () { data.loggedIn = false; });
+            .success(function () { store.loggedIn = true; })
+            .error  (function () { store.loggedIn = false; });
     };
-
-    var data = new Vue({
-        el: "#login-area",
-        data: {
-            loginAvailable: true,
-            loggedIn: false,
-            login: login,
-            logout: logout,
-            token: null
-        }
-    });
 
     function registerCallbacks() {
 		keycloakAuth.onAuthSuccess = function () {
@@ -49,10 +38,10 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
         keycloakAuth.init({
             onLoad: enforceLogin ? "login-required" : "check-sso"
         }).success(function (authenticated) {
-            data.loggedIn = authenticated;
+            store.loggedIn = authenticated;
             console.log('Authenticated: ' + authenticated);
             if (authenticated) {
-                data.token = keycloakAuth.token;
+                store.token = keycloakAuth.token;
                 console.log('local time: ' + new Date().getTime() / 1000);
                 console.log('iat: ' + keycloakAuth.tokenParsed.iat);
                 console.log('diff: ' + (new Date().getTime() / 1000 - keycloakAuth.tokenParsed.iat));
@@ -60,7 +49,7 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
                 console.log('isExpired: ' + keycloakAuth.isTokenExpired());
                 window.setInterval(function () {
                     keycloakAuth.updateToken(15).success(function () {
-                        data.token = keycloakAuth.token;
+                        store.token = keycloakAuth.token;
                         console.info('updateToken success.')
                     }).error(function () {
                         console.error('Fehler beim Aktualisieren des Keycloak-Tokens')
@@ -68,15 +57,15 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
                 }, 10000);
             }
             if (callback) {
-                callback(data);
+                callback();
             }
         }).error(function (err) {
-            data.loginAvailable = false;
-            data.token = null;
+            store.loginAvailable = false;
+            store.token = null;
             console.log("Error initializing keycloak");
             console.log(err);
             if (callback) {
-                callback(data);
+                callback();
             }
         });
     }
@@ -90,6 +79,7 @@ define(['vue', 'keycloak'], function (Vue, Keycloak) {
 
     return {
         initialize: initialize,
-        data: data
+        login: login,
+        logout: logout
     };
 });
