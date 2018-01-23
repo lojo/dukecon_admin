@@ -36,6 +36,12 @@
         <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
         <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
         <dukecon.server.urls.keycloak>${dukecon.server.urls.base}/rest/keycloak.json</dukecon.server.urls.keycloak>
+
+        <!-- Plugins and Dependency Versions - keep them in Alphabetical order! -->
+        <docker-maven-plugin.version>0.21.0</docker-maven-plugin.version>
+        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
+
+        <!-- IntelliJ generates new version properties here - move them above every now and then -->
     </properties>
 
     <profiles>
@@ -68,6 +74,71 @@
                 <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
                 <dukecon.server.urls.keycloak>${dukecon.server.urls.base}/rest/keycloak.json</dukecon.server.urls.keycloak>
             </properties>
+        </profile>
+        <profile>
+            <id>docker-build</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-dockerfile</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/docker-build/</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/main/docker</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-dist</id>
+                                <phase>prepare-package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/docker-build/dist</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.build.outputDirectory}</directory>
+                                            <filtering>false</filtering>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>dukecon/dukecon-admin-client:${project.version}</name>
+                                    <build>
+                                        <tags>
+                                            <tag>${project.version}</tag>
+                                            <tag>latest</tag>
+                                        </tags>
+                                        <ports>
+                                            <port>80</port>
+                                        </ports>
+                                        <dockerFile>${project.build.directory}/docker-build/Dockerfile</dockerFile>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
     
@@ -122,10 +193,22 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>${maven-resources-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker-maven-plugin.version}</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
         <plugins>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
                 <executions>
                     <execution>
                         <phase>prepare-package</phase>
