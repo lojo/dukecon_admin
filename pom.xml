@@ -29,8 +29,9 @@
         <nexus.repository.port />
         <nexus.repository.base>/nexus</nexus.repository.base>
 
-        <dukecon.default.conferenceid>jl2017</dukecon.default.conferenceid>
-        <dukecon.server.urls.base>https://localhost:8080/develop</dukecon.server.urls.base>
+        <!-- Default properties for init.json -->
+        <dukecon.default.conferenceid>jl2018</dukecon.default.conferenceid>
+        <dukecon.server.urls.base>https://localhost:8080</dukecon.server.urls.base>
         <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
         <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
         <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
@@ -61,7 +62,7 @@
         <profile>
             <id>javaland</id>
             <properties>
-                <dukecon.server.urls.base>https://programm.javaland.eu/2017</dukecon.server.urls.base>
+                <dukecon.server.urls.base>https://programm.javaland.eu/2018</dukecon.server.urls.base>
                 <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
                 <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
                 <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
