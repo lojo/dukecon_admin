@@ -13,19 +13,12 @@ pipeline {
 
   stages {
     stage('Build') {
-       steps {
-         withMaven {
-           sh 'mvn clean test -Pjavaland'
-        }
-      }
-    }
-    stage('Docker Build') {
       when {
         branch 'master'
       }
       steps {
         withMaven {
-          sh 'mvn -Pdocker-build resources:copy-resources@copy-dockerfile resources:copy-resources@copy-dist docker:build'
+          sh 'mvn clean package docker:build -Pjavaland -Pdocker-build docker:build docker:push'
         }
       }
     }
