@@ -19,6 +19,7 @@ pipeline {
       steps {
         withMaven {
           sh 'mvn clean package docker:build -Pjavaland -Pdocker-build docker:build docker:push'
+          build job: 'docker_restart_develop_latest'
         }
       }
     }
