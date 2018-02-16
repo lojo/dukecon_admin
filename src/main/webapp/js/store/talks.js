@@ -90,9 +90,11 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 			return;
 		}
 
-		var newValueForSeats = theTalk.fullyBooked ? theTalk.availableSeats : 0;
-		document.querySelector("input[data-id='" + id +"']").value = newValueForSeats;
-		confirmAndUpdate(theTalk, newValueForSeats);
+		setTimeout(function() {
+			var newValueForSeats = theTalk.fullyBooked ? theTalk.availableSeats : 0;
+			document.querySelector("input[data-id='" + id +"']").value = newValueForSeats;
+			confirmAndUpdate(theTalk, newValueForSeats);
+		}, 50);
 	}
 	
 	function loadTalks() {
