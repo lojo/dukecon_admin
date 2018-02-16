@@ -28,7 +28,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 			return occupied / available >= threshold;
 		}
 
-		var status = theTalk.fullyBooked ? "Fully booked" : "Free";
+		var status = isFullyBooked(newValueForSeats, theTalk.availableSeats) ? "Fully booked" : "Free";
 		var message = "<span>Room: </span><em class=\"dark\">"
 			+ theTalk.roomName
 			+ "</em>\n<span>Time: </span><em class=\"dark\">" + theTalk.formattedStart
