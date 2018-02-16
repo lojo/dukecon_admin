@@ -13,7 +13,7 @@ define(['dataHelper'], function (helper) {
         return (urls.conferenceUrl !== null && urls.bookingsUrl !== null && urls.adminUrl !== null && urls.keyCloakUrl !== null) || urls.errorState;
     }
 
-    function httpRequest(url, method, onSuccess, onError, headers) {
+    function httpRequest(url, method, onSuccess, onError, headers, data) {
         if (urls.errorState) {
             if (onError) {
                 onError({status: 0, statusMessage: "error during initializiation"});
@@ -41,7 +41,7 @@ define(['dataHelper'], function (helper) {
                 }
             }
         };
-        xhttp.send();
+        xhttp.send(data);
     }
 
     function initialize(callback) {
@@ -143,7 +143,11 @@ define(['dataHelper'], function (helper) {
         if (keycloakToken) {
             headers.Authorization = "Bearer " + keycloakToken;
         }
-        httpRequest(urls.adminUrl + "/" + talk.id, talk.fullyBooked ? "POST" : "DELETE", onSuccess, onError, headers);
+        var data = {
+            fullyBooked: talk.fullyBooked,
+            numberOccupied: talk.numberOccupied
+        };
+        httpRequest(urls.adminUrl + "/capacity/" + talk.id, "POST", onSuccess, onError, headers, data);
     }
 
     return {

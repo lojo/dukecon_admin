@@ -81,6 +81,7 @@ define(['moment'], function(moment) {
 			if (event) {
 				event.fullyBooked = delta[i].fullyBooked;
 				event.numberOfFavorites = delta[i].numberOfFavorites;
+				event.occupiedSeats = delta[i].numberOccupied;
 			}
         }
         return events;

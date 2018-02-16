@@ -69,10 +69,10 @@
                 </td>
                 <td>
                     <div>
-                        <input type="number" :disabled="!talk.availableSeats" width="4" :value="talk.occupiedSeats"><span>/{{talk.availableSeats}} </span> <button :disabled="!talk.availableSeats" class="setOccupied" @click="">Set</button>
+                        <input type="number" :data-id="index" :disabled="!talk.availableSeats" width="4" :value="talk.occupiedSeats"><span>/{{talk.availableSeats}} </span> <button :data-id="index" :disabled="!talk.availableSeats" class="setOccupied" @click="update">Set</button>
                     </div>
                     <div>
-                        <input type="checkbox" :id="index" :disabled="!talk.availableSeats" v-model="talk.fullyBooked" @click="updateEmptyOrFull"><label v-bind:for="index"></label>
+                        <input type="checkbox" :id="index" :data-id="index" :disabled="!talk.availableSeats" v-model="talk.fullyBooked" @click="toggleFull"><label v-bind:for="index"></label>
                     </div>
                 </td>
             </tr>

@@ -17,34 +17,28 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 		}, onError);
 	}
 
-	function confirmAndUpdateOccupiedSeats(event) {
-		var id = event.currentTarget.id;
-		var theTalk = computed.talks()[id];
-		if (!store.loggedIn) {
-			popups.alert("Please Log In", "You must be logged in to do this.");
-			return;
+	function confirmAndUpdate(theTalk, newValueForSeats) {
+		function isFullyBooked(occupied, available) {
+			var threshold = 0.95;
+			if (occupied === 0 || available === 0) {
+				return false;
+			}
+			console.log (occupied + "/" + available + "=" + (occupied / available));
+			return occupied / available >= threshold;
 		}
-	}
 
-	function confirmAndSetEmptyOrFull(event) {
-		var id = event.currentTarget.id;
-		var theTalk = computed.talks()[id];
-		if (!store.loggedIn) {
-			popups.alert("Please Log In", "You must be logged in to do this.");
-			setTimeout(function() {
-				theTalk.fullyBooked = !theTalk.fullyBooked;
-			}, 50);
-			return;
-		}
-		
 		var status = theTalk.fullyBooked ? "Fully booked" : "Free";
 		var message = "<span>Room: </span><em class=\"dark\">"
 			+ theTalk.roomName
 			+ "</em>\n<span>Time: </span><em class=\"dark\">" + theTalk.formattedStart
+			+ "</em>\n\n<span>Occupied seats: </span><em>"+ theTalk.occupiedSeats
 			+ "</em>\n\n<span>New Status: </span><em class=\"" + status.replace(" ", "") + "\">"
 			+ status
 			+ "</em>\n\nContinue?";
-		
+		var previousSeats = theTalk.occupiedSeats;
+		theTalk.occupiedSeats = newValueForSeats;
+		theTalk.fullyBooked = isFullyBooked(newValueForSeats, theTalk.availableSeats);
+
 		popups.confirm(
 			"Confirm Status Change",
 			message,
@@ -57,7 +51,8 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 						store.loading = false;
 					},
 					function(err) {
-						theTalk.fullyBooked = !theTalk.fullyBooked;
+						theTalk.fullyBooked = isFullyBooked(previousSeats, theTalk.availableSeats);
+						theTalk.availableSeats = previousSeats;
 						onError(err);
 					},
 					store.token
@@ -69,6 +64,34 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 				console.log("aborted");
 			}
 		);
+	}
+
+	function confirmAndUpdateOccupiedSeats(event) {
+		var id = event.currentTarget.getAttribute("data-id");
+		var theTalk = computed.talks()[id];
+		var newValue = document.querySelector("input[data-id='" + id +"']").value;
+		if (!store.loggedIn) {
+			popups.alert("Please Log In", "You must be logged in to do this.");
+			document.querySelector("input[data-id='" + id +"']").value = theTalk.availableSeats;
+			return;
+		}
+
+		confirmAndUpdate(theTalk, newValue)
+	}
+
+	function confirmAndToggleFull(event) {
+		var id = event.currentTarget.getAttribute("data-id");
+		console.log("id=" + id);
+		var theTalk = computed.talks()[id];
+		if (!store.loggedIn) {
+			popups.alert("Please Log In", "You must be logged in to do this.");
+			setTimeout(function() {
+				theTalk.fullyBooked = !theTalk.fullyBooked;
+			}, 50);
+			return;
+		}
+
+		confirmAndUpdate(theTalk, (theTalk.fullyBooked ? theTalk.availableSeats : 0));
 	}
 	
 	function loadTalks() {
@@ -100,7 +123,8 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 	
 	return {
 		emptyOnEsc: emptyOnEsc,
-		updateEmptyOrFull: confirmAndSetEmptyOrFull,
+		update: confirmAndUpdateOccupiedSeats,
+		toggleFull: confirmAndToggleFull,
 		sendWithBearer: sendWithBearer,
 		refresh: loadTalks
 	}
