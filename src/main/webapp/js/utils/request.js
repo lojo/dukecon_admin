@@ -42,7 +42,7 @@ define(['dataHelper'], function (helper) {
                 }
             }
         };
-        xhttp.send(data);
+        xhttp.send(data ? JSON.stringify(data) : null);
     }
 
     function initialize(callback) {
