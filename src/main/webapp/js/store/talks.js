@@ -31,7 +31,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 		var message = "<span>Room: </span><em class=\"dark\">"
 			+ theTalk.roomName
 			+ "</em>\n<span>Time: </span><em class=\"dark\">" + theTalk.formattedStart
-			+ "</em>\n\n<span>Occupied seats: </span><em>"+ theTalk.occupiedSeats
+			+ "</em>\n\n<span>Occupied seats: </span><em>"+ newValueForSeats
 			+ "</em>\n\n<span>New Status: </span><em class=\"" + status.replace(" ", "") + "\">"
 			+ status
 			+ "</em>\n\nContinue?";
@@ -72,7 +72,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 		var newValue = document.querySelector("input[data-id='" + id +"']").value;
 		if (!store.loggedIn) {
 			popups.alert("Please Log In", "You must be logged in to do this.");
-			document.querySelector("input[data-id='" + id +"']").value = theTalk.availableSeats;
+			document.querySelector("input[data-id='" + id +"']").value = theTalk.occupiedSeats;
 			return;
 		}
 

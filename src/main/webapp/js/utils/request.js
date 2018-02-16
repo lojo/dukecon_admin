@@ -139,7 +139,9 @@ define(['dataHelper'], function (helper) {
             initialize();
         }
 
-        var headers = {};
+        var headers = {
+            "Content-Type" : "application/json"
+        };
         if (keycloakToken) {
             headers.Authorization = "Bearer " + keycloakToken;
         }
