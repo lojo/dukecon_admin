@@ -23,8 +23,6 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 			if (occupied === 0 || available === 0) {
 				return false;
 			}
-			console.log (occupied + "/" + available + "=" + (occupied / available));
-			console.log ("true or false? " + (occupied / available >= threshold));
 			return occupied / available >= threshold;
 		}
 
@@ -53,7 +51,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 					},
 					function(err) {
 						theTalk.fullyBooked = isFullyBooked(previousSeats, theTalk.availableSeats);
-						theTalk.availableSeats = previousSeats;
+						theTalk.occupiedSeats = previousSeats;
 						onError(err);
 					},
 					store.token
@@ -61,7 +59,8 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 				loadTalks();
 			},
 			function() {
-				theTalk.fullyBooked = !theTalk.fullyBooked;
+				theTalk.fullyBooked = isFullyBooked(previousSeats, theTalk.availableSeats);;
+				theTalk.occupiedSeats = previousSeats;
 				console.log("aborted");
 			}
 		);
