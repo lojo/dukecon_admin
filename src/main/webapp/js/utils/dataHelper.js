@@ -71,7 +71,6 @@ define(['moment'], function(moment) {
 		entry.roomName = getRoomName(entry.locationId, metaData.locations);
 		entry.formattedStart = moment(entry.start).format('MMM DD, HH:mm');
 		entry.availableSeats = getSeats(entry.locationId, metaData.locations);
-		entry.occupiedSeats = 0;
 	}
 
     function addDeltaToConferences(events, delta) {

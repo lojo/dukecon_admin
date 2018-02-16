@@ -64,7 +64,7 @@
                     </div>
                     <div class="talk">
                         <div class="label">Seats:</div>
-                        <div>{{talk.occupiedSeats}} / {{ talk.availableSeats }} occupied</div>
+                        <div>{{talk.occupiedSeats || 0}} / {{ talk.availableSeats }} occupied</div>
                     </div>
                 </td>
                 <td>
