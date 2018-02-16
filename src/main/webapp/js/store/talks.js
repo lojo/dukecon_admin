@@ -16,13 +16,24 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 			});
 		}, onError);
 	}
-	
-	function confirmAndUpdate(event) {
+
+	function confirmAndUpdateOccupiedSeats(event) {
 		var id = event.currentTarget.id;
 		var theTalk = computed.talks()[id];
 		if (!store.loggedIn) {
 			popups.alert("Please Log In", "You must be logged in to do this.");
-			theTalk.fullyBooked = !theTalk.fullyBooked;
+			return;
+		}
+	}
+
+	function confirmAndSetEmptyOrFull(event) {
+		var id = event.currentTarget.id;
+		var theTalk = computed.talks()[id];
+		if (!store.loggedIn) {
+			popups.alert("Please Log In", "You must be logged in to do this.");
+			setTimeout(function() {
+				theTalk.fullyBooked = !theTalk.fullyBooked;
+			}, 50);
 			return;
 		}
 		
@@ -89,7 +100,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 	
 	return {
 		emptyOnEsc: emptyOnEsc,
-		update: confirmAndUpdate,
+		updateEmptyOrFull: confirmAndSetEmptyOrFull,
 		sendWithBearer: sendWithBearer,
 		refresh: loadTalks
 	}

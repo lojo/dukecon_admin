@@ -22,8 +22,18 @@ table, th, td {
     background-color: #eee;
 }
 
-td:last-child {
-    vertical-align: middle;
+#main td:last-child {
+    min-width: 11em;
+    text-align: center;
+}
+#main td:last-child span{
+    padding: 5px;
+    line-height: 25px;
+    display: inline-block;
+}
+
+#main td:last-child div:last-child {
+    margin-top: 5px;
 }
 
 td, th {
@@ -87,15 +97,21 @@ h2 div {
     max-width: 1000px;
     padding: 1em;
 }
+input[type=search], input[type=number] {
+    width: 4em;
+    font-size: inherit;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+#main label, #main input[type=number] {
+    vertical-align: middle;
+}
 input[type=search] {
     width: 40%;
     -webkit-appearance: searchfield;
     appearance: searchfield;
-    font-size: inherit;
     float:right;
-    border-radius: 5px;
-    padding: 5px;
-    border: 1px solid #ddd;
     margin-right: 20px;
 }
 input[type=search]:focus {
@@ -107,18 +123,33 @@ input[type=checkbox] {
 label {
     width: 0;
 }
-label:before {
+label:before, button.setOccupied {
     font-size: 120%;
     font-weight: bold;
-    background: darkgreen;
     border-radius: 10px;
     color: white;
     padding: 5px;
-    width: 60px;
-    line-height: 40px;
+    width: auto;
+    line-height: 30px;
     display: inline-block;
     text-align: center;
     box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+}
+label:before {
+    background: darkgreen;
+    width: 90%;
+}
+input[type=checkbox]:disabled + label:before, input[type=checkbox]:disabled + label:hover:before {
+    background: gray;
+}
+button.setOccupied {
+    background: darkblue;
+}
+button.setOccupied:hover {
+    background: blue;
+}
+button.setOccupied:disabled {
+    background: gray;
 }
 label:active:before {
     box-shadow: none;
@@ -212,19 +243,6 @@ footer span:last-child {
     color: darkgreen;
 }
 
-@media (max-width: 480px) {
-    #main {
-        font-size: 95%;
-        margin-bottom: 3.5em;
-        padding: 0.5em;
-    }
-    footer {
-        height: 2.5em;
-    }
-    footer span:last-child {
-        top: 2.8em;
-    }
-}
 
 button {
     -webkit-appearance: none;
@@ -272,3 +290,16 @@ button {
     display: inline-block;
 }
 
+@media (max-width: 480px) {
+    #main {
+        font-size: 95%;
+        margin-bottom: 3.5em;
+        padding: 0.5em;
+    }
+    footer {
+        height: 2.5em;
+    }
+    footer span:last-child {
+        top: 2.8em;
+    }
+}

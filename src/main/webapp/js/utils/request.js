@@ -46,7 +46,7 @@ define(['dataHelper'], function (helper) {
 
     function initialize(callback) {
         httpRequest(
-            "../rest/init.json",
+            "init.json",
             "GET",
             function (result) {
                 urls.keyCloakUrl = result.keycloak;

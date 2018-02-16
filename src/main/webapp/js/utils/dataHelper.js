@@ -36,6 +36,22 @@ define(['moment'], function(moment) {
 		return "unknown";
 	}
 
+	function getSeats(roomId, rooms) {
+		// --------- Testing
+		var min = 0, max = 1900;
+		return Math.floor(Math.random()*(max - min + 1) + min);  // until we have actual data
+
+		// --------- Production
+		// var i;
+		// for (i = 0; i < rooms.length; i++) {
+		// 	if (rooms[i].id === roomId) {
+		// 		console.log(rooms[i]);
+		// 		return rooms[i].capacity;
+		// 	}
+		// }
+		// return 0;
+	}
+
 	function findByEventId(events, eventId) {
 		var i;
 		for (i = 0; i < events.length; i += 1) {
@@ -54,6 +70,8 @@ define(['moment'], function(moment) {
 	function enrichData(entry, metaData) {
 		entry.roomName = getRoomName(entry.locationId, metaData.locations);
 		entry.formattedStart = moment(entry.start).format('MMM DD, HH:mm');
+		entry.availableSeats = getSeats(entry.locationId, metaData.locations);
+		entry.occupiedSeats = 0;
 	}
 
     function addDeltaToConferences(events, delta) {
