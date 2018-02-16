@@ -14,12 +14,16 @@ body {
     overflow-y: scroll;
 }
 
-table, th, td {
+table {
     width: 100%;
     border: 1px solid #ddd;
     vertical-align: top;
-    padding: 5px;
     background-color: #eee;
+}
+th, td {
+    border: 1px solid #ddd;
+    vertical-align: top;
+    padding: 5px;
 }
 
 #main td:last-child {
@@ -295,6 +299,18 @@ button {
         font-size: 95%;
         margin-bottom: 3.5em;
         padding: 0.5em;
+    }
+    td {
+        font-size: 95%;
+    }
+    td:first-child, th:first-child {
+        max-width: 150px;
+        word-wrap:break-word;
+    }
+    td:first-child div div {
+        max-width: 110px;
+        overflow-wrap:break-word;
+        word-wrap:break-word;
     }
     footer {
         height: 2.5em;
