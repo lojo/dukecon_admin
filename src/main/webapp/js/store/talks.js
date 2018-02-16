@@ -24,6 +24,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 				return false;
 			}
 			console.log (occupied + "/" + available + "=" + (occupied / available));
+			console.log ("true or false? " + (occupied / available >= threshold));
 			return occupied / available >= threshold;
 		}
 
@@ -81,7 +82,6 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 
 	function confirmAndToggleFull(event) {
 		var id = event.currentTarget.getAttribute("data-id");
-		console.log("id=" + id);
 		var theTalk = computed.talks()[id];
 		if (!store.loggedIn) {
 			popups.alert("Please Log In", "You must be logged in to do this.");
@@ -91,7 +91,9 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 			return;
 		}
 
-		confirmAndUpdate(theTalk, (theTalk.fullyBooked ? theTalk.availableSeats : 0));
+		var newValueForSeats = theTalk.fullyBooked ? theTalk.availableSeats : 0;
+		document.querySelector("input[data-id='" + id +"']").value = newValueForSeats;
+		confirmAndUpdate(theTalk, newValueForSeats);
 	}
 	
 	function loadTalks() {

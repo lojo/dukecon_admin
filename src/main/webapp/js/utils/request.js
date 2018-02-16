@@ -28,6 +28,7 @@ define(['dataHelper'], function (helper) {
         if (headers) {
             var key, headerKeys = Object.keys(headers);
             for (key in headerKeys) {
+                console.log("set request header " + headerKeys[key] + " to " + headers[headerKeys[key]]);
                 xhttp.setRequestHeader(headerKeys[key], headers[headerKeys[key]]);
             }
         }
