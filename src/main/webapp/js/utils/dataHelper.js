@@ -37,19 +37,14 @@ define(['moment'], function(moment) {
 	}
 
 	function getSeats(roomId, rooms) {
-		// --------- Testing
-		var min = 0, max = 1900;
-		return Math.floor(Math.random()*(max - min + 1) + min);  // until we have actual data
-
-		// --------- Production
-		// var i;
-		// for (i = 0; i < rooms.length; i++) {
-		// 	if (rooms[i].id === roomId) {
-		// 		console.log(rooms[i]);
-		// 		return rooms[i].capacity;
-		// 	}
-		// }
-		// return 0;
+		var i;
+		for (i = 0; i < rooms.length; i++) {
+			if (rooms[i].id === roomId) {
+				console.log(rooms[i]);
+				return rooms[i].capacity;
+			}
+		}
+		return 0;
 	}
 
 	function findByEventId(events, eventId) {
