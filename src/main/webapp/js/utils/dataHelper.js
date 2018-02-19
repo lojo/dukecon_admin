@@ -65,7 +65,7 @@ define(['moment'], function(moment) {
 	function enrichData(entry, metaData) {
 		entry.roomName = getRoomName(entry.locationId, metaData.locations);
 		entry.formattedStart = moment(entry.start).format('MMM DD, HH:mm');
-		entry.availableSeats = getSeats(entry.locationId, metaData.locations);
+		//entry.availableSeats = getSeats(entry.locationId, metaData.locations);
 	}
 
     function addDeltaToConferences(events, delta) {
@@ -76,6 +76,7 @@ define(['moment'], function(moment) {
 				event.fullyBooked = delta[i].fullyBooked;
 				event.numberOfFavorites = delta[i].numberOfFavorites;
 				event.occupiedSeats = delta[i].numberOccupied;
+				event.availableSeats = delta[i].locationCapacity;
 			}
         }
         return events;
