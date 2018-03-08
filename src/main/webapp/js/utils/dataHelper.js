@@ -6,8 +6,7 @@ define(['moment'], function(moment) {
 			console.log("filtering is not supported on this browser, sorry!");
 			return events;
 		}
-		//var now = new moment();
-		var now = moment('2017-03-29T15:00:00.000'); // for testing
+		var now = new moment();
 		function filterByDate(event) {
 			return moment(event.end).isAfter(now);
 		}

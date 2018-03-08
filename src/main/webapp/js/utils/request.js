@@ -148,9 +148,9 @@ define(['dataHelper'], function (helper) {
         }
         var data = {
             fullyBooked: talk.fullyBooked,
-            numberOccupied: talk.numberOccupied
+            numberOccupied: talk.occupiedSeats
         };
-        httpRequest(urls.adminUrl + "/capacity/" + talk.id, "POST", onSuccess, onError, headers, data);
+        httpRequest(urls.bookingsUrl + "/" + talk.id, "POST", onSuccess, onError, headers, data);
     }
 
     return {
