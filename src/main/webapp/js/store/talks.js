@@ -47,7 +47,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 				request.update(
 					theTalk,
 					function() {
-						store.loading = false;
+                        loadTalks();
 					},
 					function(err) {
 						theTalk.fullyBooked = isFullyBooked(previousSeats, theTalk.availableSeats);
@@ -56,7 +56,6 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 					},
 					store.token
 				);
-				loadTalks();
 			},
 			function() {
 				theTalk.fullyBooked = isFullyBooked(previousSeats, theTalk.availableSeats);
