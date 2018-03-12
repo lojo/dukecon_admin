@@ -18,8 +18,8 @@
 
     <div v-if="loginAvailable" id="login-area">
         <div>
-            <a class="button" v-bind:class="{ show: !loggedIn }" v-on:click="login"><img alt="Sign in/Register" title="Sign in/Register" src="img/unlock_24px.svg"></a>
-            <a class="button" v-bind:class="{ show: loggedIn }" v-on:click="logout"><img alt="Sign Out" title="Sign Out" src="img/lock_24px.svg"></a>
+            <a class="button" :class="{ show: !loggedIn }" v-on:click="login"><img alt="Sign in/Register" title="Sign in/Register" src="img/unlock_24px.svg"></a>
+            <a class="button" :class="{ show: loggedIn }" v-on:click="logout"><img alt="Sign Out" title="Sign Out" src="img/lock_24px.svg"></a>
         </div>
     </div>
 
@@ -31,7 +31,7 @@
     <div id="loading" v-if="loading"></div>
     <h2 class="dark">
         <div>Current talks</div>
-        <div><a v-if="loggedIn && !updating" v-on:click="sendWithBearer" href="../rest/conferences/update/javaland2018">Force Update of Talks Data</a></div>
+        <div><a v-if="loggedIn && !updating" v-on:click="forceUpdate" href="#">Force Update of Talks Data</a></div>
         <input type="search" v-on:keyup="emptyOnEsc" placeholder="Quick Filter" aria-label="Quick filter" v-model="quickFilter">
         <button v-on:click="refresh" id="refresh">&thinsp;</button>
     </h2>
@@ -72,7 +72,7 @@
                         <input type="number" :data-id="index" :disabled="!talk.availableSeats" width="4" :value="talk.occupiedSeats"><span>/{{talk.availableSeats}} </span> <button :data-id="index" :disabled="!talk.availableSeats" class="setOccupied" @click="update">Set</button>
                     </div>
                     <div>
-                        <input type="checkbox" :id="index" :data-id="index" :disabled="!talk.availableSeats" v-model="talk.fullyBooked" @click="toggleFull"><label v-bind:for="index"></label>
+                        <input type="checkbox" :id="index" :data-id="index" :disabled="!talk.availableSeats" v-model="talk.fullyBooked" @click="toggleFull"><label :for="index"></label>
                     </div>
                 </td>
             </tr>
@@ -81,7 +81,7 @@
 </div>
 
 <footer>
-    <a target="new" rel="noopener noreferrer" href="https://programm.javaland.eu">Return to Javaland 2017 Program</a>
+    <a target="new" rel="noopener noreferrer" href="https://programm.javaland.eu">Return to Javaland Program</a>
     <span>powered by<a href="http://www.dukecon.org" target="_blank" rel="noopener noreferrer">DukeCon</a></span>
 </footer>
 </body>

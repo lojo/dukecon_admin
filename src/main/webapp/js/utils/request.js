@@ -4,6 +4,7 @@ define(['dataHelper'], function (helper) {
 	var urls = {
 		conferenceUrl: null,
 		bookingsUrl: null,
+        forceUpdateUrl: null,
 		adminUrl: null,
 		keyCloakUrl: null,
 		errorState: false
@@ -53,6 +54,7 @@ define(['dataHelper'], function (helper) {
                 urls.keyCloakUrl = result.keycloak;
 				urls.conferenceUrl = result.conferences;
 				urls.bookingsUrl = result.events;
+				urls.forceUpdateUrl = result.forceUpdate;
 				urls.adminUrl = result.admin || "";
 				urls.adminUrl = urls.adminUrl.replace(/\/$/ig, ""); // make sure there is no space at the end
 				urls.errorState = false;
@@ -153,10 +155,15 @@ define(['dataHelper'], function (helper) {
         httpRequest(urls.bookingsUrl + "/" + talk.id, "POST", onSuccess, onError, headers, data);
     }
 
+    function getForceUpdateUrl() {
+        return urls.forceUpdateUrl;
+    }
+
     return {
 		initialize : initialize,
         get: getList,
         update: update,
-        getWithToken: getWithToken
+        getWithToken: getWithToken,
+        getForceUpdateUrl: getForceUpdateUrl
     };
 });

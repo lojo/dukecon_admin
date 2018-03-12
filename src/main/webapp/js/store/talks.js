@@ -5,10 +5,10 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 		}
 	}
 	
-	function sendWithBearer(event) {
+	function forceUpdate(event) {
 		event.preventDefault();
 		store.updating = true;
-		var href = event.currentTarget.href;
+		var href = request.getForceUpdateUrl();
 		console.log(href);
 		request.getWithToken(href, store.token, function(result) {
 			popups.alert("Refresh Data", "Success!", function() {
@@ -59,7 +59,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 				loadTalks();
 			},
 			function() {
-				theTalk.fullyBooked = isFullyBooked(previousSeats, theTalk.availableSeats);;
+				theTalk.fullyBooked = isFullyBooked(previousSeats, theTalk.availableSeats);
 				theTalk.occupiedSeats = previousSeats;
 				console.log("aborted");
 			}
@@ -128,7 +128,7 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 		emptyOnEsc: emptyOnEsc,
 		update: confirmAndUpdateOccupiedSeats,
 		toggleFull: confirmAndToggleFull,
-		sendWithBearer: sendWithBearer,
+        forceUpdate: forceUpdate,
 		refresh: loadTalks
 	}
 });
