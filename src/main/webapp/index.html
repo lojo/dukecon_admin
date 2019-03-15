@@ -31,7 +31,13 @@
     <div id="loading" v-if="loading"></div>
     <h2 class="dark">
         <div>Current talks</div>
-        <div><a v-if="loggedIn && !updating" v-on:click="forceUpdate" href="#">Force Update of Talks Data</a></div>
+        <div>
+            <span v-if="loggedIn && !updating">
+                <a v-on:click="forceUpdate" href="#">Force Update of Talks Data</a>
+                <a v-on:click="forceUpdate" href="#">Export Favorites</a>
+                <a v-on:click="forceUpdate" href="#">Export Feedback</a>
+            </span>
+        </div>
         <input type="search" v-on:keyup="emptyOnEsc" placeholder="Quick Filter" aria-label="Quick filter" v-model="quickFilter">
         <button v-on:click="refresh" id="refresh">&thinsp;</button>
     </h2>

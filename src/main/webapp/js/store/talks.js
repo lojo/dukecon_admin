@@ -17,6 +17,18 @@ define(['store', 'computed', 'request', 'popups', 'dataHelper', 'scrollHelper'],
 		}, onError);
 	}
 
+	function exportFavorites(event) {
+		event.preventDefault();
+		store.updating = true;
+		var href = request.getForceUpdateUrl();
+		console.log(href);
+		request.getWithToken(href, store.token, function(result) {
+			popups.alert("Refresh Data", "Success!", function() {
+				store.updating = false;
+			});
+		}, onError);
+	}
+
 	function confirmAndUpdate(theTalk, newValueForSeats) {
 		function isFullyBooked(occupied, available) {
 			var threshold = 0.95;
