@@ -38,10 +38,10 @@
         <dukecon.server.urls.keycloak>${dukecon.server.urls.base}/rest/keycloak.json</dukecon.server.urls.keycloak>
 
         <!-- Plugins and Dependency Versions - keep them in Alphabetical order! -->
-        <docker-maven-plugin.version>0.21.0</docker-maven-plugin.version>
-        <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-        <maven-resources-plugin.version>3.0.2</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M1</maven-surefire-plugin.version>
+        <docker-maven-plugin.version>0.28.0</docker-maven-plugin.version>
+        <maven-deploy-plugin.version>3.0.0-M1</maven-deploy-plugin.version>
+        <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+        <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
 
         <!-- IntelliJ generates new version properties here - move them above every now and then -->
     </properties>
