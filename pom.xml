@@ -30,9 +30,9 @@
         <nexus.repository.base>/nexus</nexus.repository.base>
 
         <!-- Default properties for init.json -->
-        <dukecon.default.conferenceid>jl2018</dukecon.default.conferenceid>
+        <dukecon.default.conferenceid>javaland2019</dukecon.default.conferenceid>
         <dukecon.server.urls.base>https://localhost:8080</dukecon.server.urls.base>
-        <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
+        <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/</dukecon.server.urls.admin>
         <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
         <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
         <dukecon.server.urls.keycloak>${dukecon.server.urls.base}/rest/keycloak.json</dukecon.server.urls.keycloak>
@@ -50,8 +50,8 @@
         <profile>
             <id>latest</id>
             <properties>
-                <dukecon.server.urls.base>https://latest.dukecon.org/javaland/2017</dukecon.server.urls.base>
-                <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
+                <dukecon.server.urls.base>https://latest.dukecon.org/javaland/2019</dukecon.server.urls.base>
+                <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/</dukecon.server.urls.admin>
                 <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
                 <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
                 <dukecon.server.urls.keycloak>${dukecon.server.urls.base}/rest/keycloak.json</dukecon.server.urls.keycloak>
@@ -60,8 +60,8 @@
         <profile>
             <id>testing</id>
             <properties>
-                <dukecon.server.urls.base>https://testing.dukecon.org/javaland/2017</dukecon.server.urls.base>
-                <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
+                <dukecon.server.urls.base>https://testing.dukecon.org/javaland/2019</dukecon.server.urls.base>
+                <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/</dukecon.server.urls.admin>
                 <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
                 <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
                 <dukecon.server.urls.keycloak>${dukecon.server.urls.base}/rest/keycloak.json</dukecon.server.urls.keycloak>
@@ -70,7 +70,7 @@
         <profile>
             <id>javaland</id>
             <properties>
-                <dukecon.server.urls.base>https://programm.javaland.eu/2018</dukecon.server.urls.base>
+                <dukecon.server.urls.base>https://programm.javaland.eu/2019</dukecon.server.urls.base>
                 <dukecon.server.urls.admin>${dukecon.server.urls.base}/rest/admin/${dukecon.default.conferenceid}</dukecon.server.urls.admin>
                 <dukecon.server.urls.conferences>${dukecon.server.urls.base}/rest/conferences/${dukecon.default.conferenceid}</dukecon.server.urls.conferences>
                 <dukecon.server.urls.events>${dukecon.server.urls.base}/rest/eventsBooking/${dukecon.default.conferenceid}</dukecon.server.urls.events>
