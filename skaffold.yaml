@@ -16,6 +16,7 @@ profiles:
   build:
     artifacts:
     - docker: {}
+      context: target/docker-build
     tagPolicy:
       envTemplate:
         template: '{{.DOCKER_REGISTRY}}/dukecon-jx/dukecon-admin:{{.DIGEST_HEX}}'
