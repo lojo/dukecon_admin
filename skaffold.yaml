@@ -2,8 +2,8 @@ apiVersion: skaffold/v1beta2
 kind: Config
 build:
   artifacts:
-  - image: changeme
-    context: .
+  - image: latest
+    context: target/docker-build
     docker: {}
   tagPolicy:
     envTemplate:
