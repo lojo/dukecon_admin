@@ -6,7 +6,7 @@ pipeline {
     ORG = 'dukecon-jx'
     APP_NAME = 'dukecon-admin'
     CHARTMUSEUM_CREDS = credentials('jenkins-x-chartmuseum')
-    DOCKER_REGISTRY_ORG = 'dukecon-1068'
+    DOCKER_REGISTRY_ORG = 'jxtest-199909'
   }
   stages {
     stage('CI Build and push snapshot') {
